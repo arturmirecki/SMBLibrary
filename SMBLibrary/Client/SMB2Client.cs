@@ -58,6 +58,7 @@ namespace SMBLibrary.Client
 
         public SMB2Client()
         {
+            TimeOut = 5000;
         }
 
         public bool Connect(IPAddress serverAddress, SMBTransportType transport)
@@ -181,12 +182,12 @@ namespace SMBLibrary.Client
             return false;
         }
 
-        public NTStatus Login(string domainName, string userName, string password)
+        public NTStatus Login(string domainName, string userName, string password, ulong previousSessionId)
         {
-            return Login(domainName, userName, password, AuthenticationMethod.NTLMv2);
+            return Login(domainName, userName, password, previousSessionId, AuthenticationMethod.NTLMv2);
         }
 
-        public NTStatus Login(string domainName, string userName, string password, AuthenticationMethod authenticationMethod)
+        public NTStatus Login(string domainName, string userName, string password, ulong previousSessionId, AuthenticationMethod authenticationMethod)
         {
             if (!m_isConnected)
             {
@@ -201,6 +202,7 @@ namespace SMBLibrary.Client
 
             SessionSetupRequest request = new SessionSetupRequest();
             request.SecurityMode = SecurityMode.SigningEnabled;
+            request.PreviousSessionId = previousSessionId;
             request.SecurityBuffer = negotiateMessage;
             TrySendCommand(request);
             SMB2Command response = WaitForCommand(SMB2CommandName.SessionSetup);
@@ -217,6 +219,7 @@ namespace SMBLibrary.Client
                     m_sessionID = response.Header.SessionID;
                     request = new SessionSetupRequest();
                     request.SecurityMode = SecurityMode.SigningEnabled;
+                    request.PreviousSessionId = previousSessionId;
                     request.SecurityBuffer = authenticateMessage;
                     TrySendCommand(request);
                     response = WaitForCommand(SMB2CommandName.SessionSetup);
@@ -464,7 +467,6 @@ namespace SMBLibrary.Client
 
         internal SMB2Command WaitForCommand(SMB2CommandName commandName)
         {
-            const int TimeOut = 5000;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             while (stopwatch.ElapsedMilliseconds < TimeOut)
@@ -489,7 +491,6 @@ namespace SMBLibrary.Client
 
         internal SessionPacket WaitForSessionResponsePacket()
         {
-            const int TimeOut = 5000;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             while (stopwatch.ElapsedMilliseconds < TimeOut)
@@ -569,6 +570,19 @@ namespace SMBLibrary.Client
             else
             {
                 m_messageID += request.Header.CreditCharge;
+            }
+        }
+
+        public int TimeOut
+        {
+            get; set;
+        }
+
+        public ulong SessionID
+        {
+            get
+            {
+                return m_sessionID;
             }
         }
 

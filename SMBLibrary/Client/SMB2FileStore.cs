@@ -105,6 +105,9 @@ namespace SMBLibrary.Client
             SMB2Command response = m_client.WaitForCommand(SMB2CommandName.Write);
             if (response != null)
             {
+                if (response.Header.Status == NTStatus.STATUS_PENDING)
+                    response = m_client.WaitForCommand(SMB2CommandName.Write);
+
                 if (response.Header.Status == NTStatus.STATUS_SUCCESS && response is WriteResponse)
                 {
                     numberOfBytesWritten = (int)((WriteResponse)response).Count;
