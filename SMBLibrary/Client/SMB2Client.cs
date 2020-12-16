@@ -58,6 +58,7 @@ namespace SMBLibrary.Client
 
         public SMB2Client()
         {
+            TimeOut = 5000;
         }
 
         public bool Connect(IPAddress serverAddress, SMBTransportType transport)
@@ -466,7 +467,6 @@ namespace SMBLibrary.Client
 
         internal SMB2Command WaitForCommand(SMB2CommandName commandName)
         {
-            const int TimeOut = 5000;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             while (stopwatch.ElapsedMilliseconds < TimeOut)
@@ -491,7 +491,6 @@ namespace SMBLibrary.Client
 
         internal SessionPacket WaitForSessionResponsePacket()
         {
-            const int TimeOut = 5000;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             while (stopwatch.ElapsedMilliseconds < TimeOut)
@@ -572,6 +571,11 @@ namespace SMBLibrary.Client
             {
                 m_messageID += request.Header.CreditCharge;
             }
+        }
+
+        public int TimeOut
+        {
+            get; set;
         }
 
         public ulong SessionID
