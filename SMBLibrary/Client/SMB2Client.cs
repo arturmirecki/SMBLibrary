@@ -181,12 +181,12 @@ namespace SMBLibrary.Client
             return false;
         }
 
-        public NTStatus Login(string domainName, string userName, string password)
+        public NTStatus Login(string domainName, string userName, string password, ulong previousSessionId)
         {
-            return Login(domainName, userName, password, AuthenticationMethod.NTLMv2);
+            return Login(domainName, userName, password, previousSessionId, AuthenticationMethod.NTLMv2);
         }
 
-        public NTStatus Login(string domainName, string userName, string password, AuthenticationMethod authenticationMethod)
+        public NTStatus Login(string domainName, string userName, string password, ulong previousSessionId, AuthenticationMethod authenticationMethod)
         {
             if (!m_isConnected)
             {
@@ -201,6 +201,7 @@ namespace SMBLibrary.Client
 
             SessionSetupRequest request = new SessionSetupRequest();
             request.SecurityMode = SecurityMode.SigningEnabled;
+            request.PreviousSessionId = previousSessionId;
             request.SecurityBuffer = negotiateMessage;
             TrySendCommand(request);
             SMB2Command response = WaitForCommand(SMB2CommandName.SessionSetup);
@@ -217,6 +218,7 @@ namespace SMBLibrary.Client
                     m_sessionID = response.Header.SessionID;
                     request = new SessionSetupRequest();
                     request.SecurityMode = SecurityMode.SigningEnabled;
+                    request.PreviousSessionId = previousSessionId;
                     request.SecurityBuffer = authenticateMessage;
                     TrySendCommand(request);
                     response = WaitForCommand(SMB2CommandName.SessionSetup);
@@ -569,6 +571,14 @@ namespace SMBLibrary.Client
             else
             {
                 m_messageID += request.Header.CreditCharge;
+            }
+        }
+
+        public ulong SessionID
+        {
+            get
+            {
+                return m_sessionID;
             }
         }
 
