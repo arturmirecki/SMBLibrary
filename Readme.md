@@ -1,3 +1,12 @@
+Contents of this repository is based on [TalAloni/SMBLibrary](https://github.com/TalAloni/SMBLibrary).
+
+Changes (SMB2):
+* STATUS_PENDING handling
+* sending previous session identifier during authentication
+* TimeOut property added
+
+*Original readme:*
+
 About SMBLibrary:
 =================
 SMBLibrary is an open-source C# SMB 1.0/CIFS, SMB 2.0, SMB 2.1 and SMB 3.0 server and client implementation.  
