@@ -57,6 +57,7 @@
     <Compile Include="Authentication\NTLM\Structures\NTLMVersion.cs" />
     <Compile Include="Client\ConnectionState.cs" />
     <Compile Include="Client\Enums\AuthenticationMethod.cs" />
+    <Compile Include="Client\Helpers\NamedPipeHelper.cs" />
     <Compile Include="Client\Helpers\NTLMAuthenticationHelper.cs" />
     <Compile Include="Client\Helpers\ServerServiceHelper.cs" />
     <Compile Include="Client\ISMBClient.cs" />
@@ -102,13 +103,6 @@
     <Compile Include="NetBios\SessionPackets\SessionPacket.cs" />
     <Compile Include="NetBios\SessionPackets\SessionRequestPacket.cs" />
     <Compile Include="NetBios\SessionPackets\SessionRetargetResponsePacket.cs" />
-    <Compile Include="NTFileStore\Adapter\FileHandle.cs" />
-    <Compile Include="NTFileStore\Adapter\IOExceptionHelper.cs" />
-    <Compile Include="NTFileStore\Adapter\NTFileSystemAdapter.cs" />
-    <Compile Include="NTFileStore\Adapter\NTFileSystemAdapter.Query.cs" />
-    <Compile Include="NTFileStore\Adapter\NTFileSystemAdapter.QueryDirectory.cs" />
-    <Compile Include="NTFileStore\Adapter\NTFileSystemAdapter.QueryFileSystem.cs" />
-    <Compile Include="NTFileStore\Adapter\NTFileSystemAdapter.Set.cs" />
     <Compile Include="NTFileStore\Enums\AccessMask\AccessMask.cs" />
     <Compile Include="NTFileStore\Enums\AccessMask\DirectoryAccessMask.cs" />
     <Compile Include="NTFileStore\Enums\AccessMask\FileAccessMask.cs" />
@@ -130,6 +124,7 @@
     <Compile Include="NTFileStore\Enums\NtCreateFile\ShareAccess.cs" />
     <Compile Include="NTFileStore\Enums\SecurityInformation\ImpersonationLevel.cs" />
     <Compile Include="NTFileStore\Enums\SecurityInformation\SecurityInformation.cs" />
+    <Compile Include="NTFileStore\FileHandle.cs" />
     <Compile Include="NTFileStore\INTFileStore.cs" />
     <Compile Include="NTFileStore\NamedPipeStore.cs" />
     <Compile Include="NTFileStore\NTFileStoreHelper.cs" />
