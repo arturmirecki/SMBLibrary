@@ -3,13 +3,12 @@
   <PropertyGroup>
     <TargetFrameworks>net4.6.1;netstandard2.0</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <AssemblyName>SMBLibrary</AssemblyName>
+    <AssemblyName>SMBLibrary.Adapters</AssemblyName>
     <Version>1.4.6</Version>
     <NoWarn>1573;1591</NoWarn>
-    <RootNamespace>SMBLibrary</RootNamespace>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <RootNamespace>SMBLibrary.Adapters</RootNamespace>
     <Authors>Tal Aloni</Authors>
-    <PackageDescription>SMBLibrary is an open-source C# SMB 1.0/CIFS, SMB 2.0, SMB 2.1 and SMB 3.0 server and client implementation</PackageDescription>
+    <PackageDescription>FileSystem adapters for SMBLibrary</PackageDescription>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/TalAloni/SMBLibrary</PackageProjectUrl>
     <RepositoryUrl>https://github.com/TalAloni/SMBLibrary</RepositoryUrl>
@@ -17,7 +16,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Utilities\Utilities.csproj" PrivateAssets="All" />
+    <ProjectReference Include="..\DiskAccessLibrary.FileSystems.Abstractions\DiskAccessLibrary.FileSystems.Abstractions.csproj" />
+    <ProjectReference Include="..\SMBLibrary\SMBLibrary.csproj" />
   </ItemGroup>
 
 </Project>
