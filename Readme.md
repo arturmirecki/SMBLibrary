@@ -5,6 +5,8 @@ Changes (SMB2):
 * sending previous session identifier during authentication
 * TimeOut property added
 
+Contact: Artur Mirecki <arturmirecki@gmail.com>
+
 *Original readme:*
 
 About SMBLibrary:
