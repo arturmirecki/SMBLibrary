@@ -468,7 +468,7 @@ namespace SMBLibrary.Client
             }
         }
 
-        internal SMB2Command WaitForCommand(SMB2CommandName commandName)
+        private SMB2Command waitForCommand(SMB2CommandName commandName)
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -490,6 +490,16 @@ namespace SMBLibrary.Client
                 m_incomingQueueEventHandle.WaitOne(100);
             }
             return null;
+        }
+
+        internal SMB2Command WaitForCommand(SMB2CommandName commandName)
+        {
+            var result = waitForCommand(commandName);
+
+            if ((result != null) && (result.Header.Status == NTStatus.STATUS_PENDING))
+                result = waitForCommand(commandName);
+
+            return result;
         }
 
         internal SessionPacket WaitForSessionResponsePacket()
